@@ -1,0 +1,1 @@
+class InvalidImageFileFailure implements Exception {}

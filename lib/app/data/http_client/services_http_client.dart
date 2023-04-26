@@ -84,4 +84,29 @@ class ServicesHttpClient {
     );
     return _parseResponse(response);
   }
+
+  Future<void> uploadFile(
+    String path, {
+    required String filePath,
+    Map<String, String> headers = const {},
+  }) async {
+    final request = http.MultipartRequest('POST', Uri.parse('$_baseUrl$path'));
+    final requestHeaders = await _withToken(headers);
+    for (final key in requestHeaders.keys) {
+      final value = requestHeaders[key];
+      if (value != null) {
+        request.headers[key] = value;
+      }
+    }
+    request.files.add(await http.MultipartFile.fromPath('image', filePath));
+    final response = await request.send();
+    if (response.statusCode >= 400) {
+      final map = jsonDecode(await response.stream.join());
+      final message = map['message'] ?? map['error'];
+      throw ServicesHttpError(
+        message: message,
+        statusCode: response.statusCode,
+      );
+    }
+  }
 }

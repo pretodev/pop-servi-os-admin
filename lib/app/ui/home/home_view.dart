@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/app/auth_store.dart';
+import 'package:flutter_application_3/app/state/auth_store.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
@@ -12,6 +12,14 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tela inicial"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/user-menu');
+            },
+            icon: const Icon(Icons.person),
+          ),
+        ],
       ),
       body: Center(
         child: TextButton(

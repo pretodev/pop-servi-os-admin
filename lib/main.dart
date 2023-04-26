@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/app.dart';
-import 'package:flutter_application_3/app/auth_store.dart';
 import 'package:flutter_application_3/app/data/auth_service.dart';
 import 'package:flutter_application_3/app/data/http_client/services_http_client.dart';
 import 'package:flutter_application_3/app/data/http_client/services_token_storage.dart';
 import 'package:flutter_application_3/app/data/user_service.dart';
+import 'package:flutter_application_3/app/state/auth_store.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

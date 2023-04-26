@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/app/auth_store.dart';
+import 'package:flutter_application_3/app/state/auth_store.dart';
 import 'package:flutter_application_3/app/ui/home/home_view.dart';
 import 'package:flutter_application_3/app/ui/login/login_view.dart';
+import 'package:flutter_application_3/app/ui/register/register_view.dart';
 import 'package:flutter_application_3/app/ui/splash/splash_view.dart';
+import 'package:flutter_application_3/app/ui/theme.dart';
+import 'package:flutter_application_3/app/ui/user_menu/user_menu_view.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
@@ -25,10 +28,16 @@ class _AppState extends State<App> {
         case AuthStatus.waiting:
           break;
         case AuthStatus.authenticated:
-          _navigateKey.currentState!.pushReplacementNamed('/home');
+          _navigateKey.currentState!.pushNamedAndRemoveUntil(
+            '/home',
+            (_) => false,
+          );
           break;
         case AuthStatus.unauthenticated:
-          _navigateKey.currentState!.pushReplacementNamed('/login');
+          _navigateKey.currentState!.pushNamedAndRemoveUntil(
+            '/login',
+            (_) => false,
+          );
           break;
       }
     });
@@ -38,6 +47,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.instance,
       navigatorKey: _navigateKey,
       title: 'Serviços da Hora',
       debugShowCheckedModeBanner: false,
@@ -46,8 +56,8 @@ class _AppState extends State<App> {
         '/splash': (context) => const SplashView(),
         '/login': (context) => const LoginView(),
         '/home': (context) => const HomeView(),
-        '/user-editor': (context) => Container(),
-        '/register': (context) => Container(),
+        '/user-menu': (context) => const UserMenuView(),
+        '/register': (context) => const RegisterView(),
       },
     );
   }
